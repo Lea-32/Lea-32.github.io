@@ -1,0 +1,19 @@
+title: "Lea 的学习笔记"
+description: "记录学习，整理思考，分享实践。"
+author: "Lea"
+url: "https://lea-32.github.io"
+baseurl: ""
+theme: minima
+lang: zh-CN
+timezone: Asia/Shanghai
+permalink: /notes/:year/:month/:day/:title/
+show_excerpts: true
+header_pages:
+  - archive.html
+  - about.md
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+exclude:
+  - WRITING.md
+

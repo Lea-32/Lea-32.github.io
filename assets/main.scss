@@ -26,6 +26,20 @@ pre { padding: 16px; }
 .archive-list time { color: #687b73; font-variant-numeric: tabular-nums; margin-right: 16px; }
 .site-footer { background: #f2eee4; }
 a:focus-visible { outline: 2px solid #267061; outline-offset: 4px; }
+.note-entry { padding: 20px 0; border-bottom: 1px solid #deddd2; }
+.note-entry h3 { margin-bottom: 4px; }
+.note-entry p { font-size: 14px; color: #6b756b; }
+.note-toc { background: #f2eee4; border-radius: 6px; padding: 16px 20px; margin: 28px 0; }
+.note-toc summary { cursor: pointer; }
+#toc a { display: block; line-height: 1.6; padding: 5px 0; font-size: 14px; }
+#toc .toc-h2 { padding-left: 12px; }
+#toc .toc-h3 { padding-left: 24px; }
+.post-content { overflow-wrap: anywhere; }
+.post-content img { max-width: 100%; height: auto; }
+.post-content table { display: block; overflow-x: auto; }
+.post-content blockquote { background: #f2eee4; border-left-color: #64816c; font-size: 17px; font-style: normal; padding: 16px; }
+mark { background: #efe5bc; color: inherit; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
 @media screen and (max-width: 600px) {
   .intro { padding: 22px; }
   .page-content { padding-top: 24px; }

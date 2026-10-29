@@ -1,0 +1,25 @@
+{
+  "notes": [
+    {
+      "title": "CS336学习笔记",
+      "slug": "cs336",
+      "source": "CS336学习笔记.md"
+    },
+    {
+      "title": "Hot100",
+      "slug": "hot100",
+      "source": "Hot100.md"
+    },
+    {
+      "title": "Text-to-sql",
+      "slug": "text-to-sql",
+      "source": "Text-to-sql.md"
+    }
+  ],
+  "warnings": [
+    {
+      "note": "CS336学习笔记.md",
+      "missing": "Pasted image 20260921170922.png"
+    }
+  ]
+}

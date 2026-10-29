@@ -3,7 +3,13 @@ layout: page
 title: 归档
 permalink: /archive/
 ---
-<p>按时间整理的全部笔记，共 {{ site.posts | size }} 篇。</p>
+<p>共 {{ site.notes | size }} 篇学习笔记。</p>
+<ul class="archive-list">
+{% assign notes = site.notes | sort: 'title' %}
+{% for note in notes %}
+<li><a href="{{ note.url | relative_url }}">{{ note.title | escape }}</a></li>
+{% endfor %}
+</ul>
 {% assign groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
 {% for group in groups %}
 <h2>{{ group.name }}</h2>

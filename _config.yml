@@ -16,4 +16,13 @@ plugins:
   - jekyll-seo-tag
 exclude:
   - WRITING.md
+  - import_obsidian.py
+  - import-report.json
+  - tools
+  - preview
+collections:
+  notes:
+    output: true
+kramdown:
+  math_engine: mathjax
 

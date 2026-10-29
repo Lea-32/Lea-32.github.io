@@ -1,11 +1,23 @@
 ---
 layout: page
-title: 搜索
+title: 找到下一份灵感。
+description: 搜索标题、分类、标签与笔记正文。
 permalink: /search/
 ---
-<form id="note-search" class="search-widget"><label for="query">搜索标题、标签和笔记正文</label><div><input id="query" name="q" placeholder="例如：分词器、链表、SQL" required><button>搜索</button></div></form>
-<p id="search-status" role="status">输入关键词，查找笔记。</p><div id="search-results"></div>
+<form id="note-search" class="search-form"><label for="query">想了解什么？</label><div class="search-row"><input class="bg-[#f5f5f7] rounded-xl text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3]/30 transition-all" id="query" name="q" type="search" placeholder="分词器、链表、论文…" required><button class="primary-button rounded-full font-medium transition-all duration-300">搜索</button></div></form>
+<p id="search-status" class="results-status" role="status">输入关键词，查找笔记。</p><div id="search-results"></div>
 <script>
-const form=document.getElementById('note-search'),input=document.getElementById('query'),status=document.getElementById('search-status'),results=document.getElementById('search-results');let indexPromise;
-async function search(){const q=input.value.trim();results.replaceChildren();if(!q){status.textContent='输入关键词，查找笔记。';return}status.textContent='正在搜索…';try{if(!indexPromise)indexPromise=fetch('{{ "/search.json" | relative_url }}').then(r=>{if(!r.ok)throw Error('index');return r.json()}).catch(e=>{indexPromise=null;throw e});const notes=await indexPromise;const words=q.toLowerCase().split(/\s+/);const found=notes.filter(n=>words.every(w=>(n.title+' '+n.tags+' '+n.content).toLowerCase().includes(w)));status.textContent='找到 '+found.length+' 篇笔记';found.forEach(n=>{const article=document.createElement('article'),h=document.createElement('h2'),link=document.createElement('a');link.href=n.url;link.textContent=n.title;h.append(link);article.append(h);article.className='search-result';results.append(article)});history.replaceState(null,'','?q='+encodeURIComponent(q))}catch(e){status.textContent='搜索暂时不可用，请刷新重试，或从归档浏览笔记。'}}form.addEventListener('submit',e=>{e.preventDefault();search()});input.value=new URLSearchParams(location.search).get('q')||'';if(input.value)search();
+(() => {
+const form=document.getElementById('note-search'),input=document.getElementById('query'),status=document.getElementById('search-status'),results=document.getElementById('search-results');
+let indexPromise,request=0;
+async function search(){
+const ticket=++request,q=input.value.trim();results.replaceChildren();if(!q){status.textContent='输入关键词，查找笔记。';return}status.textContent='正在搜索…';
+try{if(!indexPromise)indexPromise=fetch('{{ "/search.json" | relative_url }}').then(r=>{if(!r.ok)throw Error('index');return r.json()}).catch(e=>{indexPromise=null;throw e});const notes=await indexPromise;if(ticket!==request)return;
+const words=q.toLowerCase().split(/\s+/),found=notes.filter(n=>words.every(w=>(n.title+' '+n.category+' '+n.tags+' '+n.description+' '+n.content).toLowerCase().includes(w)));
+status.textContent=found.length?'找到 '+found.length+' 篇笔记':'没有找到相关笔记，试试更简短的关键词。';
+found.forEach(n=>{const article=document.createElement('article'),label=document.createElement('span'),h=document.createElement('h2'),link=document.createElement('a'),p=document.createElement('p');label.textContent=n.category;label.className='result-category';link.href=n.url;link.textContent=n.title;h.append(link);p.textContent=n.description||'';article.className='search-result';article.append(label,h,p);results.append(article)});
+const url=new URL(location.href);url.searchParams.set('q',q);history.replaceState(null,'',url)
+}catch(e){if(ticket===request)status.textContent='暂时无法加载搜索，请刷新重试或从分类浏览笔记。'}}
+form.addEventListener('submit',e=>{e.preventDefault();search()});input.value=new URLSearchParams(location.search).get('q')||'';if(input.value)search();
+})();
 </script>

@@ -1,4 +1,4 @@
 ---
 layout: default
 ---
-<article class="page-card"><h1>{{ page.title | escape }}</h1><div class="post-content">{{ content }}</div></article>
+<section class="page-section"><header class="page-heading"><h1>{{ page.title | escape }}</h1>{% if page.description %}<p>{{ page.description | escape }}</p>{% endif %}</header><div class="reading-surface post-content">{{ content }}</div></section>

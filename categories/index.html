@@ -1,0 +1,9 @@
+---
+layout: default
+title: 内容分类
+permalink: /categories/
+---
+<section class="page-section"><header class="page-heading"><h1>沿着兴趣，深入一点。</h1><p>把零散的探索，整理成清晰的知识脉络。</p></header>
+<div class="category-grid">{% for category in site.data.categories %}{% assign notes = site.notes | where: 'category', category.id %}
+<a class="category-card bg-white rounded-2xl shadow-sm" href="{{ '/categories/' | append: category.id | append: '/' | relative_url }}"><span class="category-count">{{ notes | size }} 篇笔记</span><h2>{{ category.name }}</h2><p>{{ category.description }}</p><span class="category-arrow" aria-hidden="true">↗</span></a>
+{% endfor %}</div></section>

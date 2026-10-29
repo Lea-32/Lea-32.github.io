@@ -1,0 +1,15 @@
+- id: papers
+  name: 论文精读
+  description: 从问题、方法到实验，读懂一篇论文。
+- id: stacks
+  name: 技术栈学习
+  description: 梳理核心概念，建立系统的知识结构。
+- id: algorithms
+  name: 算法与数据结构
+  description: 用代码与推演，积累解决问题的方法。
+- id: projects
+  name: 项目实践
+  description: 从想法到实现，记录每一步探索。
+- id: notes
+  name: 随记
+  description: 阅读、思考，以及值得留下的片段。

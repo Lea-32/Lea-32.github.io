@@ -1,0 +1,15 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const filters=['all','papers','stacks','algorithms','projects','notes'].map(value=>({dataset:{filter:value},attrs:{},events:{},setAttribute(k,v){this.attrs[k]=v},removeAttribute(k){delete this.attrs[k]},addEventListener(k,fn){this.events[k]=fn}}));
+const cards=['stacks','algorithms','projects'].map(category=>({dataset:{category},hidden:false}));
+const status={textContent:''},empty={hidden:true},reset={addEventListener(k,fn){this.fn=fn}},theme={attrs:{},setAttribute(k,v){this.attrs[k]=v},addEventListener(k,fn){this.fn=fn}};
+const location=new URL('https://lea-32.github.io/?category=papers#library');let pop;
+const document={documentElement:{dataset:{}},getElementById(id){return {'theme-toggle':theme,'filter-status':status,'filter-empty':empty}[id]},querySelectorAll(selector){return {'[data-filter]':filters,'#note-grid [data-category]':cards,'.main-nav a':[]}[selector]||[]},querySelector(){return reset}};
+const history={pushState(_,__,url){location.href=url.href}},localStorage={setItem(k,v){this[k]=v}};
+vm.runInNewContext(fs.readFileSync(require('path').join(__dirname,'../assets/site.js'),'utf8'),{document,location,history,localStorage,URL,URLSearchParams,window:{addEventListener(k,fn){pop=fn}}});
+assert(cards.every(c=>c.hidden));assert.strictEqual(empty.hidden,false);
+const click=value=>filters.find(f=>f.dataset.filter===value).events.click({button:0,preventDefault(){}});
+click('stacks');assert.strictEqual(cards.filter(c=>!c.hidden).length,1);assert.strictEqual(status.textContent,'共 1 篇笔记');assert.strictEqual(location.search,'?category=stacks');
+click('all');assert.strictEqual(cards.filter(c=>!c.hidden).length,3);assert.strictEqual(location.search,'');
+location.search='?category=unknown';pop();assert(cards.every(c=>!c.hidden));
+theme.fn();assert.strictEqual(document.documentElement.dataset.theme,'dark');assert.strictEqual(localStorage['lea-theme'],'dark');
+console.log('PASS: category deep link, empty state, counts, reset, unknown category, history and theme persistence');

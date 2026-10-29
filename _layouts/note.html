@@ -1,18 +1,19 @@
 ---
 layout: default
 ---
-<article class="post page-card">
-  <header><p class="eyebrow">学习笔记</p><h1 class="post-title">{{ page.title | escape }}</h1></header>
-  <details class="note-toc"><summary>本篇目录</summary><nav id="toc" aria-label="文章目录"></nav></details>
-  <div class="post-content" id="note-content">{{ content }}</div>
-  <p><a href="{{ '/archive/' | relative_url }}">← 返回全部笔记</a></p>
+{% assign category_id = page.category | default: 'notes' %}{% assign category = site.data.categories | where: 'id', category_id | first %}
+<article class="note-section">
+<a class="back-link" href="{{ '/categories/' | append: category_id | append: '/' | relative_url }}">← {{ category.name | default: '随记' }}</a>
+<header class="note-header"><h1>{{ page.title | escape }}</h1>{% if page.description %}<p class="note-description">{{ page.description | escape }}</p>{% endif %}<div class="note-meta"><span>Lea</span><span>{{ category.name | default: '随记' }}</span>{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y-%m-%d' }}</time>{% endif %}</div>
+{% if page.tags %}<div class="tag-list">{% for tag in page.tags %}<a href="{{ '/search/' | relative_url }}?q={{ tag | url_encode }}">{{ tag | escape }}</a>{% endfor %}</div>{% endif %}</header>
+<details class="note-toc"><summary>本篇目录</summary><nav id="toc" aria-label="文章目录"></nav></details>
+<div class="post-content" id="note-content">{{ content }}</div>
+<footer class="note-bottom"><a href="{{ '/archive/' | relative_url }}">← 浏览所有笔记</a></footer>
 </article>
 <script>
-window.MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true}, options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}};
-document.querySelectorAll('#note-content h1, #note-content h2, #note-content h3').forEach((heading, i) => {
-  if (!heading.id) heading.id = 'section-' + i;
-  const link = document.createElement('a'); link.href = '#' + heading.id; link.textContent = heading.textContent;
-  link.className = 'toc-' + heading.tagName.toLowerCase(); document.getElementById('toc').appendChild(link);
-});
+window.MathJax = {tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+const toc=document.getElementById('toc');
+document.querySelectorAll('#note-content h1,#note-content h2,#note-content h3').forEach((heading,i)=>{if(!heading.id)heading.id='section-'+i;const link=document.createElement('a');link.href='#'+heading.id;link.textContent=heading.textContent;link.className='toc-'+heading.tagName.toLowerCase();toc.appendChild(link)});
+if(!toc.children.length)toc.closest('details').hidden=true;
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>

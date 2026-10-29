@@ -1,0 +1,8 @@
+---
+layout: default
+---
+{% assign category = site.data.categories | where: 'id', page.category_id | first %}
+{% assign notes = site.notes | where: 'category', page.category_id | sort: 'title' %}
+<section class="page-section"><a class="back-link" href="{{ '/categories/' | relative_url }}">← 全部分类</a><header class="page-heading"><h1>{{ category.name }}</h1><p>{{ category.description }}</p></header><p class="results-status">共 {{ notes | size }} 篇笔记</p>
+{% if notes.size > 0 %}<div class="article-grid">{% for note in notes %}{% include note-card.html note=note %}{% endfor %}</div>
+{% else %}<div class="empty-state"><h2>新的探索，即将从这里开始。</h2><p>这里还没有笔记，欢迎稍后再来。</p><a href="{{ '/' | relative_url }}#library">先浏览其他笔记 →</a></div>{% endif %}</section>

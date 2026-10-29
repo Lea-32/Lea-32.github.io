@@ -1,6 +1,7 @@
-"""Export an Obsidian vault without modifying it. Requires Pillow for WebP images."""
+"""Export an Obsidian vault without modifying it. Requires Pillow and PyYAML."""
 from pathlib import Path
 import re, json, hashlib, argparse, html
+import yaml
 from PIL import Image
 
 p = argparse.ArgumentParser()
@@ -24,6 +25,16 @@ def resolve(target, source):
 
 for source in notes:
     body = source.read_text(encoding='utf-8-sig')
+    source_front = re.match(r'^---\r?\n(.*?)\r?\n---(?:\r?\n|$)', body, re.S)
+    metadata = yaml.safe_load(source_front[1]) or {} if source_front else {}
+    if not isinstance(metadata, dict):
+        raise ValueError(f'{source.name}: front matter must be a mapping')
+    existing_path = out / '_notes' / (slugs[source] + '.md')
+    existing = {}
+    if existing_path.exists():
+        previous = re.match(r'^---\n(.*?)\n---', existing_path.read_text(encoding='utf-8'), re.S)
+        if previous:
+            existing = yaml.safe_load(previous[1]) or {}
     body = re.sub(r'^---\r?\n.*?\r?\n---\r?\n', '', body, count=1, flags=re.S)
     body = re.sub(r'(?m)^(!\[\[[^\]\n]+)\]\s*$', r'\1]]', body)
     def wiki(m):
@@ -72,8 +83,19 @@ for source in notes:
         part = re.sub(r'==([^=\n]+)==', r'<mark>\1</mark>', part)
         parts[i] = re.sub(r'%%.*?%%', '', part, flags=re.S)
     body = ''.join(parts)
-    title = source.stem
-    front = '---\nlayout: note\ntitle: ' + json.dumps(title, ensure_ascii=False) + '\npermalink: /notes/' + slugs[source] + '/\n---\n'
+    title = str(metadata.get('title', existing.get('title', source.stem)))
+    allowed = {'papers', 'stacks', 'algorithms', 'projects', 'notes'}
+    category = metadata.get('category', existing.get('category', 'notes'))
+    if category not in allowed:
+        raise ValueError(f'{source.name}: category must be one of {sorted(allowed)}')
+    front_data = {'layout': 'note', 'title': title, 'permalink': '/notes/' + slugs[source] + '/', 'category': category}
+    for field in ['description', 'tags', 'date']:
+        value = metadata.get(field, existing.get(field))
+        if value is not None:
+            front_data[field] = value
+    if 'tags' in front_data and isinstance(front_data['tags'], str):
+        front_data['tags'] = [front_data['tags']]
+    front = '---\n' + yaml.safe_dump(front_data, allow_unicode=True, sort_keys=False) + '---\n'
     # Raw prevents code examples from being interpreted as Liquid template instructions.
     (out / '_notes' / (slugs[source]+'.md')).write_text(front + '{% raw %}\n' + body.replace('{% endraw %}', '{% endraw %}{{ "{% endraw %}" }}{% raw %}') + '\n{% endraw %}\n', encoding='utf-8')
     converted.append({'title':title, 'slug':slugs[source], 'source':source.relative_to(root).as_posix()})

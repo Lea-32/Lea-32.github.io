@@ -66,15 +66,43 @@ python E:\codex\Projects\lea-blog\import_obsidian.py E:\Agent-Learning\Agent-Lea
 也可以请 Codex 在检查后更新上传。常规正文、代码、双括号图片与链接、高亮和提示块会转换；
 Dataview、复杂插件、块引用或其他特殊语法需要进一步适配。
 
-当前脚本会重新生成文章元数据，不保留在发布副本中手工添加的 description 和 tags。
-如需要持续维护这些字段，先扩展脚本以读取 Vault 的 front matter。
+脚本现在会读取 Vault 笔记顶部的 YAML 属性，并保留发布副本中已有的分类、简介和标签；
+同名字段以 Vault 为准。依赖 Python、Pillow、PyYAML。
+
+## 内容分类
+
+每篇笔记使用一个主要分类 category，并可添加多个 tags。
+
+| category 值 | 页面名称 |
+| --- | --- |
+| papers | 论文精读 |
+| stacks | 技术栈学习 |
+| algorithms | 算法与数据结构 |
+| projects | 项目实践 |
+| notes | 随记（默认） |
+
+在 Obsidian 或仓库文章顶部这样填写：
+
+```yaml
+---
+title: "一篇论文的精读笔记"
+category: papers
+description: "研究问题、核心方法与实验结果的梳理。"
+tags: [大模型, 论文精读]
+---
+```
+
+直接在 GitHub 新建笔记时，还需保留 layout: note 和唯一的 permalink。
+分类页、首页筛选、数量和搜索会在发布后自动更新。新增分类需同步修改
+_data/categories.yml、分类入口页面，以及 import_obsidian.py 的 allowed 集合。
 
 ## 修改外观
 
 - 标题、简介、作者：_config.yml。
 - 个人介绍：about.md。
-- 左右侧栏与导航：_layouts/default.html。
-- 三栏布局、卡片、配色和深色模式：assets/stack.scss。
+- 顶部导航与页脚：_layouts/default.html。
+- 页面布局、卡片、配色和深色模式：assets/apple.scss。
+- 分类名称与介绍：_data/categories.yml。
 - 长文目录和公式：_layouts/note.html。
 
 每次提交到 main 后自动发布。发布失败时打开 Actions 中对应任务查看报错。

@@ -1,7 +1,13 @@
 ---
 layout: note
-title: "Text-to-sql"
+title: Text-to-sql
 permalink: /notes/text-to-sql/
+category: projects
+description: 自然语言查询数据库的实践记录，探索 Agent 与 SQL 的结合。
+tags:
+- Agent
+- SQL
+- LangGraph
 ---
 {% raw %}
 # Text-to-sql

@@ -24,6 +24,13 @@ exclude:
 collections:
   notes:
     output: true
+defaults:
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: note
+      category: notes
 kramdown:
   math_engine: mathjax
 

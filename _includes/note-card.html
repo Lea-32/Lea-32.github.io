@@ -1,0 +1,8 @@
+{% assign category_id = include.note.category | default: 'notes' %}
+{% assign category = site.data.categories | where: 'id', category_id | first %}
+<article class="article-card bg-white rounded-2xl shadow-sm" data-category="{{ category_id | escape }}">
+<div class="card-top"><a class="category-link" href="{{ '/categories/' | append: category_id | append: '/' | relative_url }}">{{ category.name | default: '随记' | escape }}</a><span class="card-symbol" aria-hidden="true">↗</span></div>
+<h3><a class="article-title" href="{{ include.note.url | relative_url }}">{{ include.note.title | escape }}</a></h3>
+<p>{{ include.note.description | default: '记录学习中的问题、理解与实践。' | escape }}</p>
+<div class="card-bottom"><span>{% if include.note.date %}{{ include.note.date | date: '%Y-%m-%d' }}{% else %}Lea · 学习记录{% endif %}</span><a class="read-link" href="{{ include.note.url | relative_url }}" aria-label="阅读：{{ include.note.title | escape }}">阅读全文 <span aria-hidden="true">→</span></a></div>
+</article>

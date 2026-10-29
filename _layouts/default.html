@@ -1,0 +1,26 @@
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{% seo %}
+<link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/stack.css' | relative_url }}">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('lea-theme')||'light'}catch(e){}</script>
+</head><body>
+<a class="skip-link" href="#main">跳转到正文</a>
+<div class="blog-shell"><aside class="profile-sidebar">
+<a class="avatar" href="{{ '/' | relative_url }}" aria-label="返回首页">L<span>✦</span></a>
+<a class="brand" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+<p class="profile-description">{{ site.description | escape }}</p>
+<a class="github-link" href="https://github.com/Lea-32">GitHub ↗</a>
+<nav class="main-nav" aria-label="主导航">
+<a href="{{ '/' | relative_url }}">⌂　首页</a><a href="{{ '/about/' | relative_url }}">○　关于</a>
+<a href="{{ '/archive/' | relative_url }}">▤　归档</a><a href="{{ '/search/' | relative_url }}">⌕　搜索</a></nav>
+<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">切换深色模式</button>
+<p class="sidebar-footer">© {{ 'now' | date: '%Y' }} Lea<br>持续学习，慢慢积累。</p></aside>
+<main id="main" class="main-column" tabindex="-1">{{ content }}</main>
+<aside class="widget-sidebar" aria-label="笔记导航">
+<form action="{{ '/search/' | relative_url }}" class="widget search-widget"><label for="sidebar-query">搜索笔记</label><div><input id="sidebar-query" name="q" placeholder="输入关键词…" required><button aria-label="搜索">⌕</button></div></form>
+<section class="widget"><h2>全部笔记 <span>{{ site.notes | size }}</span></h2><ul>{% assign notes = site.notes | sort: 'title' %}{% for note in notes %}<li><a href="{{ note.url | relative_url }}">{{ note.title | escape }}</a></li>{% endfor %}</ul></section>
+<section class="widget"><h2>分类与标签</h2><div class="tag-list"><a href="{{ '/archive/' | relative_url }}">学习笔记</a>{% assign all_tags = site.notes | map: 'tags' | join: ',' | split: ',' | uniq | sort %}{% for tag in all_tags %}{% if tag != '' %}<a href="{{ '/search/' | relative_url }}?q={{ tag | url_encode }}">{{ tag | escape }}</a>{% endif %}{% endfor %}</div></section>
+<section class="widget quiet"><p>把学过的知识，<br>变成自己的理解。</p></section></aside></div>
+<script>
+const themeButton=document.getElementById('theme-toggle');function updateThemeButton(){const dark=document.documentElement.dataset.theme==='dark';themeButton.setAttribute('aria-pressed',String(dark));themeButton.textContent=dark?'切换浅色模式':'切换深色模式'}updateThemeButton();themeButton.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('lea-theme',document.documentElement.dataset.theme)}catch(e){}updateThemeButton()});
+</script></body></html>

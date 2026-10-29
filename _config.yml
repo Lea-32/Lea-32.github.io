@@ -16,6 +16,7 @@ plugins:
   - jekyll-seo-tag
 exclude:
   - WRITING.md
+  - BLOG-GUIDE.md
   - import_obsidian.py
   - import-report.json
   - tools

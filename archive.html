@@ -1,0 +1,22 @@
+---
+layout: page
+title: 归档
+permalink: /archive/
+---
+<p>共 {{ site.notes | size }} 篇学习笔记。</p>
+<ul class="archive-list">
+{% assign notes = site.notes | sort: 'title' %}
+{% for note in notes %}
+<li><a href="{{ note.url | relative_url }}">{{ note.title | escape }}</a></li>
+{% endfor %}
+</ul>
+{% assign groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{% for group in groups %}
+<h2>{{ group.name }}</h2>
+<ul class="archive-list">
+{% for post in group.items %}
+<li><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m-%d" }}</time> <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></li>
+{% endfor %}
+</ul>
+{% endfor %}
+

@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<article class="post">
+  <header><p class="eyebrow">学习笔记</p><h1 class="post-title">{{ page.title | escape }}</h1></header>
+  <details class="note-toc"><summary>本篇目录</summary><nav id="toc" aria-label="文章目录"></nav></details>
+  <div class="post-content" id="note-content">{{ content }}</div>
+  <p><a href="{{ '/archive/' | relative_url }}">← 返回全部笔记</a></p>
+</article>
+<script>
+window.MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true}, options: {skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']}};
+document.querySelectorAll('#note-content h1, #note-content h2, #note-content h3').forEach((heading, i) => {
+  if (!heading.id) heading.id = 'section-' + i;
+  const link = document.createElement('a'); link.href = '#' + heading.id; link.textContent = heading.textContent;
+  link.className = 'toc-' + heading.tagName.toLowerCase(); document.getElementById('toc').appendChild(link);
+});
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>

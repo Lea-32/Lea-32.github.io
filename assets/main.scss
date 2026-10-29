@@ -1,0 +1,48 @@
+---
+---
+@import "minima";
+
+:root { color-scheme: light; }
+body { background: #faf7f0; color: #30382f; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 17px; line-height: 1.9; }
+a { color: #267061; }
+a:visited { color: #35695f; }
+a:hover { color: #164b40; }
+.site-header { border-top: 3px solid #426653; background: #faf7f0; }
+.site-title, .site-title:visited { color: #24342f; font-weight: 600; }
+.wrapper { max-width: 760px; }
+.page-content { padding: 40px 0; }
+.intro { padding: 24px 0 36px; margin: 0 0 44px; border-bottom: 1px solid #deddd2; }
+.intro h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.5; letter-spacing: -.5px; }
+.eyebrow { color: #52776c; font-size: 12px; letter-spacing: 2px; font-weight: 600; }
+.post-list > li { padding-bottom: 24px; border-bottom: 1px solid #e1e7e2; }
+.post-link { font-size: 24px; line-height: 1.5; }
+.post-title, .page-heading { font-size: 32px; line-height: 1.5; }
+.post-content h2 { font-size: 26px; margin-top: 36px; }
+.post-content img { border-radius: 8px; }
+pre, code { background-color: #edf2ee; }
+pre { padding: 16px; }
+.archive-list { list-style: none; margin-left: 0; }
+.archive-list li { padding: 12px 0; border-bottom: 1px solid #e1e7e2; }
+.archive-list time { color: #687b73; font-variant-numeric: tabular-nums; margin-right: 16px; }
+.site-footer { background: #f2eee4; }
+a:focus-visible { outline: 2px solid #267061; outline-offset: 4px; }
+.note-entry { padding: 20px 0; border-bottom: 1px solid #deddd2; }
+.note-entry h3 { margin-bottom: 4px; }
+.note-entry p { font-size: 14px; color: #6b756b; }
+.note-toc { background: #f2eee4; border-radius: 6px; padding: 16px 20px; margin: 28px 0; }
+.note-toc summary { cursor: pointer; }
+#toc a { display: block; line-height: 1.6; padding: 5px 0; font-size: 14px; }
+#toc .toc-h2 { padding-left: 12px; }
+#toc .toc-h3 { padding-left: 24px; }
+.post-content { overflow-wrap: anywhere; }
+.post-content img { max-width: 100%; height: auto; }
+.post-content table { display: block; overflow-x: auto; }
+.post-content blockquote { background: #f2eee4; border-left-color: #64816c; font-size: 17px; font-style: normal; padding: 16px; }
+mark { background: #efe5bc; color: inherit; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; padding: 8px 0; }
+@media screen and (max-width: 600px) {
+  .intro { padding: 22px; }
+  .page-content { padding-top: 24px; }
+  .post-title { font-size: 28px; }
+}
+

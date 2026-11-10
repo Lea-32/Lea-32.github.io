@@ -75,7 +75,13 @@ for source in notes:
             first, rest = part.split('\n', 1)
             lang = first[3:].split()[0] if first[3:].split() else ''
             label = re.search(r'tab:(.*)', first)
-            parts[i] = ('**' + label.group(1).strip() + '**\n\n' if label else '') + '```' + lang + '\n' + rest
+            group = re.search(r'\bgroup:([^\s]+)', first)
+            marker = ''
+            if label and group:
+                marker = '<span class="code-meta" data-group="' + html.escape(group[1], quote=True) + '" data-tab="' + html.escape(label[1].strip(), quote=True) + '" hidden></span>\n\n'
+            elif label:
+                marker = '**' + label[1].strip() + '**\n\n'
+            parts[i] = marker + '```' + lang + '\n' + rest
             continue
         part = re.sub(r'(!?)\[\[([^\]|]+)(?:\|([^\]]+))?\]\]', wiki, part)
         part = re.sub(r'(?m)^\s*--- (?:start-multi-column[^\n]*|column-break ---|end-multi-column)\s*$', '', part)

@@ -1,5 +1,22 @@
 # 博客访问与管理
 
+## 代码方法切换
+
+在 Obsidian 中给连续代码块填写同一个 group、不同的 tab，导出后即可切换。示例：
+
+````markdown
+```python group:two-sum tab:暴力解法
+def solve(nums):
+    return nums
+```
+```python group:two-sum tab:哈希表
+def solve(nums):
+    return dict(enumerate(nums))
+```
+````
+
+连续且 group 相同才会分组；中间出现正文或标题时开始新组。支持方向键、Home、End 切换；代码可单独复制和横向滚动。普通代码块只需填写语言，如 python、javascript、sql。
+
 - 公开网站：https://lea-32.github.io/
 - 管理仓库：https://github.com/Lea-32/Lea-32.github.io
 - 笔记目录：https://github.com/Lea-32/Lea-32.github.io/tree/main/_notes

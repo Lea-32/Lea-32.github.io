@@ -78,7 +78,7 @@ for source in notes:
             group = re.search(r'\bgroup:([^\s]+)', first)
             marker = ''
             if label and group:
-                marker = '<span class="code-meta" data-group="' + html.escape(group[1], quote=True) + '" data-tab="' + html.escape(label[1].strip(), quote=True) + '" hidden></span>\n\n'
+                marker = '<div class="code-meta" data-group="' + html.escape(group[1], quote=True) + '" data-tab="' + html.escape(label[1].strip(), quote=True) + '" hidden></div>\n\n'
             elif label:
                 marker = '**' + label[1].strip() + '**\n\n'
             parts[i] = marker + '```' + lang + '\n' + rest

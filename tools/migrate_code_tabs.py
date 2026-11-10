@@ -8,7 +8,7 @@ for match in re.finditer(r'```([^\n]*)\n(.*?)\n```',source,re.S):
     if not group or not tab:continue
     language=first.split()[0]
     old='**'+tab[1].strip()+'**\n\n```'+language+'\n'+code+'\n```'
-    marker='<span class="code-meta" data-group="'+html.escape(group[1],quote=True)+'" data-tab="'+html.escape(tab[1].strip(),quote=True)+'" hidden></span>'
+    marker='<div class="code-meta" data-group="'+html.escape(group[1],quote=True)+'" data-tab="'+html.escape(tab[1].strip(),quote=True)+'" hidden></div>'
     new=marker+'\n\n```'+language+'\n'+code+'\n```'
     if old in published:published=published.replace(old,new,1);count+=1
 path.write_text(published,encoding='utf-8')

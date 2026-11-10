@@ -1,9 +1,11 @@
 from pathlib import Path
 source=Path(__file__).with_name('browser_qa.py').read_text(encoding='utf-8')
-source=source.replace('apple-qa-profile','code-tabs-qa-profile')
+source=source.replace('apple-qa-profile','code-tabs-qa-fresh-profile')
+source=source.replace("call('Page.enable');call('Runtime.enable')", "call('Network.enable');call('Network.setCacheDisabled',{'cacheDisabled':True});call('Page.enable');call('Runtime.enable')")
 insertion='''    navigate('/notes/hot100/','.code-tabs')
     assert evaluate("document.querySelectorAll('.code-tabs').length>=10")
     print(evaluate("JSON.stringify({groups:[...document.querySelectorAll('.code-tabs')].map(g=>[...g.querySelectorAll('[role=tab]')].map(b=>b.textContent)),remaining:[...document.querySelectorAll('.code-meta')].map(m=>m.outerHTML)})"))
+    print(evaluate("(()=>{const h=document.getElementById('note-content').innerHTML;let i=h.indexOf('快慢');return h.slice(i-450,i+1800)})()"))
     assert evaluate("document.querySelectorAll('.code-tabs [role=tab]').length>=26")
     assert evaluate("[...document.querySelectorAll('.code-tabs')].every(g=>g.querySelectorAll('[role=tabpanel]:not([hidden])').length===1)")
     evaluate("document.querySelectorAll('.code-tabs [role=tab]')[1].click()")

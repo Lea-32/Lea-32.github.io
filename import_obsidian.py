@@ -89,6 +89,7 @@ for source in notes:
         part = re.sub(r'==([^=\n]+)==', r'<mark>\1</mark>', part)
         parts[i] = re.sub(r'%%.*?%%', '', part, flags=re.S)
     body = ''.join(parts)
+    body = re.sub(r'(?m)^(```[^\n]*)(?:\n|$)', r'\n\1\n\n', body)
     title = str(metadata.get('title', existing.get('title', source.stem)))
     allowed = {'papers', 'stacks', 'algorithms', 'projects', 'notes'}
     category = metadata.get('category', existing.get('category', 'notes'))

@@ -12,6 +12,7 @@ for match in re.finditer(r'```([^\n]*)\n(.*?)\n```',source,re.S):
     new=marker+'\n\n```'+language+'\n'+code+'\n```'
     if old in published:published=published.replace(old,new,1);count+=1
 published=re.sub(r'(?<!\n)\n(<div class="code-meta")',r'\n\n\1',published)
+published=re.sub(r'(?m)^(```[^\n]*)(?:\n|$)',r'\n\1\n\n',published)
 path.write_text(published,encoding='utf-8')
 assert count>0 or 'class="code-meta"' in published
 print('Migrated code methods:',count)
